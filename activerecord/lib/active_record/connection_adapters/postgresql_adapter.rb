@@ -768,8 +768,10 @@ module ActiveRecord
           self.client_min_messages = @config[:min_messages] || "warning"
           self.schema_search_path = @config[:schema_search_path] || @config[:schema_order]
 
-          # Use standard-conforming strings so we don't have to do the E'...' dance.
-          set_standard_conforming_strings
+          # ~~Use standard-conforming strings so we don't have to do the E'...' dance.~~
+          # UPST Actually, no, don't do that. Standard-conforming strings are already the default, and this
+          # UPST setting interferes with transaction-mode connection pooling, degrading performance.
+          # set_standard_conforming_strings
 
           variables = @config.fetch(:variables, {}).stringify_keys
 
